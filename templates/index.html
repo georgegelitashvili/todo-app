@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <script src="/static/js/services/auth.js"></script>
+    <script type="module" src="/static/js/app.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav id="main-nav">
+            <!-- Nav content will be loaded dynamically -->
+        </nav>
+        <div id="app-container">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const appContainer = document.getElementById('app-container');
+
+            const mainNav = document.getElementById('main-nav');
+            
+            // Better authentication check
+            function isAuthenticated() {
+                const token = localStorage.getItem('token');
+                return !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
+            }
+
+            // Update navigation based on auth state
+            if (isAuthenticated()) {
+                mainNav.innerHTML = `
+                <button onclick="App.handleLogout(event)" class="btn-secondary">Logout</button>
+            `;
+            } else {
+                mainNav.innerHTML = `
+                <a href="#" data-component="login">Login</a>
+                <a href="#" data-component="register">Register</a>
+            `;
+            }
+
+            async function loadComponent(name) {
+                try {
+                    const response = await fetch(`/templates/components/${name}.html`);
+                    const html = await response.text();
+                    appContainer.innerHTML = html;
+                    history.pushState(null, '', `/${name}`);
+                    
+                    // Initialize app after component is loaded
+                    if (window.App && typeof window.App.init === 'function') {
+                        await window.App.init();
+                    }
+                } catch (error) {
+                    console.error('Error loading component:', error);
+                }
+            }
+
+            // Handle navigation clicks
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const component = e.target.dataset.component;
+                    loadComponent(component);
+                });
+            });
+
+            // Initial load
+            const initialComponent = window.location.pathname.substring(1) || 'login';
+            loadComponent(initialComponent);
+        });
+    </script>
+</body>
+
+</html>

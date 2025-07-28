@@ -1,0 +1,35 @@
+<div class="tasks-page">
+    <!-- Left Panel: Task List -->
+    <div class="tasks-panel">
+        <div class="tasks-header">
+            <h2>My Tasks</h2>
+        </div>
+        <div id="tasks-list"></div>
+    </div>
+
+    <!-- Right Panel: Add Task Form -->
+    <div class="tasks-panel">
+        <div class="tasks-header">
+            <h2>Create New Task</h2>
+        </div>
+        <form id="add-task-form" method="post" onsubmit="return App.handleAddTask(event)">
+            <div class="form-group">
+                <label for="new-task">Title</label>
+                <input type="text" id="new-task" name="title" placeholder="Task title" required>
+            </div>
+            <div class="form-group">
+                <label for="task-description">Description</label>
+                <textarea id="task-description" name="description" placeholder="Task description" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="task-status">Status</label>
+                <select id="task-status" name="status" required>
+                    <option value="TODO">To Do</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="DONE">Done</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary">Add Task</button>
+        </form>
+    </div>
+</div>

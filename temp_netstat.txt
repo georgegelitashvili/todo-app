@@ -1,0 +1,8 @@
+  TCP    0.0.0.0:8080           0.0.0.0:0              LISTENING       24644
+  TCP    [::]:8080              [::]:0                 LISTENING       24644
+  TCP    [::1]:8080             [::1]:50985            ESTABLISHED     24644
+  TCP    [::1]:8080             [::1]:50986            ESTABLISHED     24644
+  TCP    [::1]:8080             [::1]:50987            ESTABLISHED     24644
+  TCP    [::1]:50985            [::1]:8080             ESTABLISHED     10120
+  TCP    [::1]:50986            [::1]:8080             ESTABLISHED     10120
+  TCP    [::1]:50987            [::1]:8080             ESTABLISHED     10120
